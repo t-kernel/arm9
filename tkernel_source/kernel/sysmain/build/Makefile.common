@@ -106,7 +106,7 @@ DBGOPT := mode=
 
 # ----------------------------------------------------------------------------
 ALL  = $(TARGET_RAM) $(TARGET_RAM:%.sys=%.map) $(TARGET_RAM:%.sys=%.mot)
-ALL += $(TARGET_ROM) $(TARGET_ROM:%.rom=%.map) $(TARGET_ROM:%.rom=%.mot)
+#LL += $(TARGET_ROM) $(TARGET_ROM:%.rom=%.map) $(TARGET_ROM:%.rom=%.mot)
 ALL += $(TARGET_RAM:%.sys=%.bin)
 EMU  = $(TARGET_EMU) $(TARGET_DBG_EMU)
 REQ_MODULES = libraries tkernel sysmgr sysinit drivers
