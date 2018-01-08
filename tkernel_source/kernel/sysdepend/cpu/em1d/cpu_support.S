@@ -40,6 +40,11 @@
 	.endm
 
 	.macro	rfefd sp
+        ldr     lr, [sp, #4]
+        msr     spsr, lr
+        ldr     lr, [sp, #0]
+        add     sp, #8
+        movs    pc, lr
 	.endm
 
 /* ------------------------------------------------------------------------ */
