@@ -32,11 +32,11 @@
 #include "tkdev_conf.h"
 #include "offset.h"
 
-	.macro	cpsie reg, reg
-#error "TODO: arm9 cpsie"
+	.macro	cpsie iflags, mode
+#error "TODO: cpsie iflags{, #mode}"
 	.endm
 
-	.macro	cpsid reg, reg
+	.macro	cpsid iflags, mode
 	.endm
 
 	.macro	rfefd sp
