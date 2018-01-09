@@ -43,17 +43,23 @@
 	.type	START, %function
 START:
 	/* Use the stack set by the monitor */
+#if __TRON_ARCH_ARM__ >= 6
 	ldr	ip, =PSR_SVC|PSR_DI|PSR_F	// SVC mode/Interrupt disable
+#else
+	ldr	ip, =PSR_SVC|PSR_I |PSR_F
+#endif
 	msr	cpsr_xc, ip
 
 	/* MMU is already ON. The initial setting is done.
 	   Only cache should be ON */
+#if CONFIG_MMU
 	mrc	p15, 0, r4, cr1, c0
 	orr	r4, r4, #CR1_C
 	orr	r4, r4, #CR1_I|CR1_Z
 	mcr	p15, 0, r4, cr1, c0
 	ldr	r4, =0
 	mcr	p15, 0, r4, cr7, c7, 0	// Cache flush
+#endif
 
 	ldr	r5, =__data_org		// Initialization of 'data' area (ROM startup)
 	ldr	r6, =__data_start
