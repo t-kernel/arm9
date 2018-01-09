@@ -46,6 +46,9 @@ EXPORT void CountWaitUsec( void )
 	UW	cnt;
 	UW	d;
 
+	SCInfo.loop64us = 740;
+	return;
+
 	/* stop timer */
 	out_w(TI_OP, 0);
 
