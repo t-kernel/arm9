@@ -1,0 +1,5 @@
+#!/bin/bash
+
+make
+arm-none-eabi-objcopy -O binary kernel-ram.sys /var/lib/tftpboot/t-kernel.bin 
+arm-none-eabi-objdump -DS kernel-ram.sys >kernel.S
