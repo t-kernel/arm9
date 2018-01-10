@@ -119,9 +119,15 @@
  *	DSB()	Data Synchronization Barrier
  *	DMB()	Data Memory Barrier
  */
+#if __TRON_ARM_ARCH__ >= 6
 #define ISB()		Asm("mcr p15, 0, %0, cr7, c5,  4":: "r"(0))
 #define DSB()		Asm("mcr p15, 0, %0, cr7, c10, 4":: "r"(0))
 #define DMB()		Asm("mcr p15, 0, %0, cr7, c10, 5":: "r"(0))
+#else
+#define ISB()		do { } while(0)
+#define DSB()		Asm("mcr p15, 0, %0, cr7, c10, 4":: "r"(0))
+#define DMB()		do { } while(0)
+#endif
 
 /* ------------------------------------------------------------------------ */
 
