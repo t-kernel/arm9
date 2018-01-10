@@ -117,3 +117,81 @@ START:
 
   l_end:				// Not suppose to return from 'main,'
 	b	l_end			// but, just in case, prepare for out of control.
+
+@
+	.globl	kputc
+kputc:
+1:	ldr	r1, =0x80074018
+	ldr	r1, [r1]
+	tst	r1, #(1<<5)
+	bne	1b
+
+	ldr	r1, =0x80074000
+	strb	r0, [r1]
+	bx	lr
+
+	.globl	kgetc
+kgetc:
+	ldr	r3, =0x80074018
+	ldr	r3, [r3]
+	tst	r3, #(1<<4)
+	bne	kgetc
+
+	ldr	r3, =0x80074000
+	ldrb	r0, [r3]
+	bx	lr
+
+	.globl	kputs
+kputs:
+	mov	r3, lr
+	bl	_puts
+	mov	r0, #'\r'
+	bl	kputc
+	mov	r0, #'\n'
+	bl	kputc
+	bx	r3
+
+	.globl	_puts
+_puts:
+1:	ldrb	r2, [r0], #1
+	cmp	r2, #0
+	bxeq	lr
+
+2:	ldr	r1, =0x80074018
+	ldr	r1, [r1]
+	tst	r1, #(1<<5)
+	bne	2b
+
+	ldr	r1, =0x80074000
+	strb	r2, [r1]
+
+	b	1b
+
+
+	.globl	kputx
+kputx:
+	mov	r3, #8
+	ldr	r1, =0x80074000
+
+__tsc:	ldr	r2, [r1, #0x18]
+	tst	r2, #(1<<5)
+	bne	__tsc
+
+	ror	r0, r0, #28
+	and	r2, r0, #15
+
+	cmp	r2, #9
+	addle	r2, #'0'
+	addgt	r2, #('A'-10)
+
+	strb	r2, [r1]
+
+	subs	r3, #1
+	bne	__tsc
+
+	bx	lr
+
+	.globl	kgets
+kgets:
+	bx	lr
+
