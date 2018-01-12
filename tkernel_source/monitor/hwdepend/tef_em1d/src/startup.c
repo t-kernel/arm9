@@ -62,7 +62,7 @@ EXPORT void procReset( void )
 	speed = ( (DipSw & SW_BHI) != 0 )? HI_BAUD_RATE: LO_BAUD_RATE;
 #endif
 	initSIO(getConPort(), speed);
-	putString("console become ready.\r\n");
+	putString("TM: console become ready.\r\n");
 	DispProgress(0x08);
 
         /* initialize hardware (peripherals) */
