@@ -26,13 +26,14 @@
 /*
  * List of timers
  */
-LOCAL struct timerlist {
+struct timerlist {
 	INT	base;		/* base address of timer registers  */
 	INTVEC	irq;		/* interrupt number */
 	UINT	mode;		/* operation mode */
 	FP	hdr;		/* user-defined interrupt handler */
 	void*	exinf;		/* user-defined exntended information */
-} TimerList[] = {
+};
+LOCAL struct timerlist TimerList[] = {
 	{ 0xc0000100,	IV_IRQ(55) },	/* TI1 */
 	{ 0xc0000200,	IV_IRQ(56) },	/* TI2 */
 	{ 0xc0000300,	IV_IRQ(57) },	/* TI3 */
