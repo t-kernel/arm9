@@ -43,11 +43,7 @@
 	.type	START, %function
 START:
 	/* Use the stack set by the monitor */
-#if __TRON_ARCH_ARM__ >= 6
 	ldr	ip, =PSR_SVC|PSR_DI|PSR_F	// SVC mode/Interrupt disable
-#else
-	ldr	ip, =PSR_SVC|PSR_I |PSR_F
-#endif
 	msr	cpsr_xc, ip
 
 	/* MMU is already ON. The initial setting is done.

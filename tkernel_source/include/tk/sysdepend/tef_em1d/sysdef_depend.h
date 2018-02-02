@@ -36,7 +36,12 @@
 #define	PSR_J		0x01000000	/* Jazelle mode */
 #define	PSR_IT		0x0600fc00	/* Thumb If-Then state */
 #define	PSR_E		0x00000200	/* data endian */
+#if __TRON_ARM_ARCH__ == 6
 #define	PSR_A		0x00000100	/* disable asynchronous abort */
+#else
+#define	PSR_A		0x00000000	/* disable asynchronous abort */
+#endif
+
 #define	PSR_I		0x00000080	/* disable interrupt(IRQ) */
 #define	PSR_F		0x00000040	/* disable fast interrupt(FIQ) */
 #define	PSR_T		0x00000020	/* Thumb mode */
