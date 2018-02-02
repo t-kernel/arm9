@@ -52,12 +52,14 @@ IMPORT void rettex_entry( void );	/* return from task exception */
 	SaveMonHdr.gio_hdr[6]  = SCArea->intvec[VECNO_GIO6];
 	SaveMonHdr.gio_hdr[7]  = SCArea->intvec[VECNO_GIO7];
 
+#ifdef CONFIG_MMU
 	/* Initialize task space */
 	Asm("mrc p15, 0, %0, cr2,  c0, 1": "=r"(r));	/* TTBR1 */
 	Asm("mcr p15, 0, %0, cr2,  c0, 0":: "r"(r));	/* TTBR0 */
 	Asm("mcr p15, 0, %0, cr13, c0, 1":: "r"(0));	/* CONTEXTIDR */
 	ISB();
 	PurgeTLB();	/* invlidate TLB */
+#endif
 
 	/* available coprocessor(s) */
 	available_cop = TA_NULL;
