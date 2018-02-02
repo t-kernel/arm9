@@ -42,6 +42,7 @@ EXPORT void FlushCacheM( CONST void *laddr, INT len, UINT mode )
 {
 	CONST VB	*p, *ep;
 
+#ifdef CONFIG_MMU
 	ep = (VB*)laddr + len;
 
 	if ( (mode & TCM_DCACHE) != 0 ) {
@@ -62,11 +63,14 @@ EXPORT void FlushCacheM( CONST void *laddr, INT len, UINT mode )
 		Asm("mcr p15, 0, %0, cr7, c5, 6":: "r"(0));
 	}
 	DSB();
+#endif
 }
 
 EXPORT void FlushCache( CONST void *laddr, INT len )
 {
+#ifdef CONFIG_MMU
 	FlushCacheM(laddr, len, TCM_ICACHE|TCM_DCACHE);
+#endif
 }
 
 /*
@@ -75,6 +79,7 @@ EXPORT void FlushCache( CONST void *laddr, INT len )
  */
 EXPORT ER ControlCacheM( void *laddr, INT len, UINT mode )
 {
+#ifdef CONFIG_MMU
 	VB	*p, *ep;
 
 	if ( (mode & ~(CC_FLUSH|CC_INVALIDATE)) != 0 ) return E_PAR;
@@ -105,5 +110,6 @@ EXPORT ER ControlCacheM( void *laddr, INT len, UINT mode )
 	Asm("mcr p15, 0, %0, cr7, c5, 6":: "r"(0));
 	DSB();
 
+#endif
 	return E_OK;
 }
