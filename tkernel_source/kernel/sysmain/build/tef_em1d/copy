@@ -1,5 +1,10 @@
 #!/bin/bash
 
-make
+make --no-print-directory
+if [[ $? -eq 0 ]]; then
 arm-none-eabi-objcopy -O binary kernel-ram.sys /var/lib/tftpboot/t-kernel.bin 
 arm-none-eabi-objdump -DS kernel-ram.sys >kernel.S
+echo "done"
+fi
+
+
