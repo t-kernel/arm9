@@ -52,7 +52,7 @@ START:
 
 	/* MMU is already ON. The initial setting is done.
 	   Only cache should be ON */
-#if CONFIG_MMU
+#ifdef CONFIG_MMU
 	mrc	p15, 0, r4, cr1, c0
 	orr	r4, r4, #CR1_C
 	orr	r4, r4, #CR1_I|CR1_Z
