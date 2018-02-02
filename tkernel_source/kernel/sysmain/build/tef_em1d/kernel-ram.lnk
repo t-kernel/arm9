@@ -38,8 +38,20 @@ SECTIONS
 		*(.rodata)
 		*(.rodata.*)
 		*(.rodata1)
-		. = ALIGN(0x1000);
 	} /*:text*/ =0
+
+        .ARM.extab : {
+                *(.ARM.extab* .gnu.linkonce.armextab.*)
+        }
+
+        __exidx_start = .;
+        .ARM.exidx : {
+                *(.ARM.exidx* .gnu.linkonce.armexidx.*)
+        }
+        __exidx_end = .;
+
+	. = ALIGN(0x1000);
+
 	__data_org = . ;
 	.data ALIGN(0x10) : {
 		__data_start = . ;
