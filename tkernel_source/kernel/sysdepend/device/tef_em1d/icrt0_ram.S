@@ -169,6 +169,9 @@ _puts:
 
 
 	.globl	kputx
+	.globl	kputp
+kputp:
+	ldr	r0, [r0]
 kputx:
 	mov	r3, #8
 	ldr	r1, =0x80074000
